@@ -1,0 +1,125 @@
+html {  margin: 0px; padding: 0px; }
+body { background:#fff url(../gfx/backBody.png) 0px 0px repeat;  font-family: 'Arial', 'Helvetica', sans-serif; font-weight:400; font-size:1.6em; line-height:auto; color:#333; margin:0px; padding: 0px; text-align:center; overflow:hidden; }
+
+/* DEFAULT RESET */
+img, fieldset { border:none;  }
+p, form, fieldset, ul, ol, li { margin:0px; padding:0px; }
+h1, h2, h3, h4, h5, h6, h7 { margin:0px; padding:0px; background-repeat: no-repeat; font-weight:400; }
+input, textarea { font-family: 'Merriweather Sans', 'Arial', 'Helvetica', sans-serif; font-weight:400; font-size:14px; }
+td { vertical-align: top; text-align: left; padding: 0px; }
+li { background-repeat: no-repeat; }
+a, *:focus { outline: none; }
+button::-moz-focus-inner { border:0; padding:0; }
+
+/* LAYOUT HELPERS */
+.cb, .clr { clear:both; font-size: 1px; line-height: 1px; display:block; }
+.fl { float:left; }
+.fr { float:right; }
+.nowrap { white-space: nowrap; }
+legend span {
+    display:block;
+}
+legend { display:none !important; }
+p.legend { padding-left:0px !important; }
+
+/* IE TRANSPARENCY FIX */
+img { margin:0px; border-radius:0px; }
+
+/* GENERIC */
+a { color: #fa610e; }
+a:hover { color: #fa610e; text-decoration: none; }
+
+/* fonts */
+
+/*
+behavior: url(css/PIE.htc); -moz-border-radius: 8px; -webkit-border-radius: 8px;  border-radius: 8px;  
+*/
+
+/**/
+.layout {  min-height:550px; width:100%; margin:auto; text-align:left; position:relative; text-align:center; }
+
+a.btn { font-family: 'Open Sans', 'Arial', 'Helvetica', sans-serif; font-weight:400; text-decoration:none; text-align:center; text-transform:uppercase; font-weight:400; behavior: url(css/PIE.htc); -moz-border-radius: 5px; -webkit-border-radius: 5px;  border-radius: 5px; -moz-box-shadow: 1px 1px 2px #888; -webkit-box-shadow: 1px 1px 2px #888; box-shadow: 1px 1px 2px #888; }
+a.btn.btnBlue { background:#0d6bb0 url(../gfx/buttonBlue.png) 0px 0px repeat-x; border:1px #0c5a95 solid; color:#fff; text-shadow: 1px 1px #0e5f9b;  }
+a.btn.btnBlue:hover { background:#0294f6; }
+
+
+header { padding:5%; position:relative; }
+header .settings { position:absolute; right:20px; top:20px; }
+
+.main { background:#009AD4; height:60%; position:relative; padding:40px; min-height:500px; }
+
+/* login */
+form#login { width:33%; margin:auto; text-align:center; }
+form#login label { color:#fff; display:block; padding-bottom:15px; text-align:left; }
+form#login input { width:95%; height:45px; background:#fff; margin-bottom:15px; border:none; font-size:1em; padding-left:5%; }
+form#login button { width:90%; height:70px; border-radius:12px; background:#0d6aaf url(../gfx/button01.png) 0px 0px repeat-x; background-size:auto 100%; border:1px #0c5a94 solid;; box-shadow:0px 5px 5px #0575a0; color:#fff; text-transform:uppercase; font-size:1.1em; margin:auto; margin-top:10px; }
+form#login p.message { color:#fff; display:block; padding-bottom:15px; text-align:center; }
+
+/* find */
+form#code { width:33%; margin:auto; text-align:center; }
+form#code label { color:#fff; display:block; padding-bottom:15px; text-align:left; }
+form#code input { width:95%; height:45px; background:#fff; margin-bottom:15px; border:none; font-size:1em; padding-left:5%; }
+form#code button { width:90%; height:70px; border-radius:12px; background:#0d6aaf url(../gfx/button01.png) 0px 0px repeat-x; background-size:auto 100%; border:1px #0c5a94 solid;; box-shadow:0px 5px 5px #0575a0; color:#fff; text-transform:uppercase; font-size:1.1em; margin:auto; margin-top:10px; }
+form#code .message { color:#fff; display:block; padding-bottom:15px; text-align:center; }
+
+/* redeem */
+form#redeem { width:33%; margin:auto; text-align:center; }
+form#redeem button { width:90%; height:70px; border-radius:12px; background:#0d6aaf url(../gfx/button01.png) 0px 0px repeat-x; background-size:auto 100%; border:1px #0c5a94 solid;; box-shadow:0px 5px 5px #0575a0; color:#fff; text-transform:uppercase; font-size:1.1em; margin:auto; margin-top:10px; }
+
+/* success */
+form#success { width:60%; margin:auto; text-align:center; }
+form#success p { color:#fff; display:block; padding-bottom:15px; text-align:center; font-size:1.7em; }
+form#success img { margin-bottom:15px; }
+form#success button { width:50%; height:70px; border-radius:12px; background:#0d6aaf url(../gfx/button01.png) 0px 0px repeat-x; background-size:auto 100%; border:1px #0c5a94 solid;; box-shadow:0px 5px 5px #0575a0; color:#fff; text-transform:uppercase; font-size:1.1em; margin:auto; margin-top:10px; }
+
+/* settings */
+form#settings { width:60%; margin:auto; text-align:center; }
+form#settings .col { width:50%; float:left; text-align:left; }
+form#settings label { color:#fff; padding-bottom:15px; text-align:left; position:relative; left:20px; font-size:0.8em; }
+form#settings p { color:#fff; display:block; padding-bottom:15px; text-align:left; font-size:1em; }
+form#settings button { width:50%; height:70px; border-radius:12px; background:#0d6aaf url(../gfx/button01.png) 0px 0px repeat-x; background-size:auto 100%; border:1px #0c5a94 solid;; box-shadow:0px 5px 5px #0575a0; color:#fff; text-transform:uppercase; font-size:1.1em; margin:auto; margin-top:10px; }
+
+/* loader screen */
+section.main#loaderScreen { background:#009AD4 url(../gfx/ajax_loader_gray_256.gif) center 150px no-repeat; background-size:70px 70px; }
+
+
+/* redeem coupon */
+section.main .redeemCoupon { margin-bottom:10px; position:relative; }
+section.main .redeemCoupon .close { background: url("../gfx/close.png") repeat scroll 0 0 #FFFFFF; display: block; height: 15px; position: absolute; right: 106px;  top: 20px; width: 15px; }
+section.main .redeemCoupon div.inner { padding-top:20px; height:222px; background:transparent url(../gfx/backRedeemCoupon.png) 0px 0px no-repeat; left:10px; margin: auto; position: relative; width: 930px; text-align:left; }
+section.main .redeemCoupon div.inner p { padding:0px; margin:0px; }
+section.main .redeemCoupon .coupon { float:left; width:250px; height:200px; background:transparent url(../gfx/line08.png) right top repeat-y; }
+section.main .redeemCoupon .coupon p.code { width:186px; margin-left:30px; text-align:center; background:transparent url(../gfx/coupon.png) center top no-repeat; padding-top:50px; font-size:25px; color:#000; text-align:center; padding-bottom:15px; } 
+section.main .redeemCoupon .coupon p.status { width:100px; margin-left:88px; padding-left:25px; font-size:12px; padding-top:2px; margin-bottom:40px; font-family:'Georgia','Arial',sans-serif;  }
+section.main .redeemCoupon .coupon p.status.active { color:#66FF99; background:#fff url(../gfx/iconOk2.png) left center no-repeat; }
+section.main .redeemCoupon .coupon p.status.inactive { color:#f00; background:#fff url(../gfx/iconCross02.png) left center no-repeat; }
+section.main .redeemCoupon .coupon p.created { width:150px; padding-left:65px; font-size:12px; padding-top:2px; background:transparent url(../gfx/iconStar5.png) 28px center no-repeat; font-family:'Georgia','Arial',sans-serif; color:#000; margin-bottom:10px; }
+section.main .redeemCoupon .coupon p.expire { width:150px; padding-left:65px; font-size:12px; padding-top:2px; background:transparent url(../gfx/iconClock2.png) 28px center no-repeat; font-family:'Georgia','Arial',sans-serif; color:#000; }
+section.main .redeemCoupon .coupon p.created strong, section.main .redeemCoupon .coupon p.expire strong { font-weight:bold; }
+section.main .redeemCoupon .discountDetail { float:left; width:615px; padding-top:15px; }
+section.main .redeemCoupon .discountDetail .img { width:115px; position:relative; height:96px; float:left; margin-left:24px; margin-bottom:50px; margin-right:15px; }
+section.main .redeemCoupon .discountDetail .img .discount { background: url("../gfx/backDiscountRedDetail.png") repeat-x scroll 0 0 #C8272F; color: #FFFFFF; font-size: 13px; left: 0; padding: 3px 7px 3px 10px; top: 7px; z-index: 1; position:absolute; }
+section.main .redeemCoupon .discountDetail h2 { width:460px; float:left; font-size:20px; padding-bottom:7px; }
+section.main .redeemCoupon .discountDetail p { width:460px; float:left; height:58px; font-size:13px; line-height:16px; width: }
+section.main .redeemCoupon .discountDetail p.price { color:#DC2125; font-size:30px; font-weight:600; height:40px; }
+section.main .redeemCoupon .discountDetail p.price strong { margin-left:20px; font-weight:300; font-size:13px; font-weight:normal; }
+section.main .redeemCoupon .discountDetail p.message { color:#0099D2; font-size:12px; float:left; display:inline; width:auto; position:relative; top:18px; }
+section.main .redeemCoupon .discountDetail .btnBlue { box-shadow: none; display: inline-block; font-size: 13px; height: 35px; position: relative; top: 4px; width: 100px; float:left; }
+section.main .redeemCoupon .discountDetail .btnBlue span { top:7px; position:relative; }
+section.main .redeemCoupon .discountDetail p.btn { padding:0px; -moz-border-radius: 4px 0px 0px 4px; -webkit-border-radius: 4px 0px 0px 4px;  border-radius: 4px 0px 0px 4px; width:auto; height:27px; background:#a0c6d7 url(../gfx/arrow/arrow05.png) right bottom no-repeat; white-space:no-wrap; position:relative; top:10px; float:left; margin:0px; margin-right:0px; float:right; }
+section.main .redeemCoupon .discountDetail p.btn a { padding-left:15px; padding-right:20px; display:block; height:27px; font-family:'Georgia','Arial',sans-serif; color:#3a738b; text-decoration:none; text-transform:uppercase; font-size:12px; }
+section.main .redeemCoupon .discountDetail p.btn:hover { background:#0099d4 url(../gfx/arrow05.png) right top no-repeat; }
+section.main .redeemCoupon .discountDetail p.btn:hover a { color:#fff; }
+section.main .redeemCoupon .discountDetail p.btn a span { position:relative; top:5px; font-weight:bold; font-size:10px; color:#0099D4; padding-right:35px; }
+section.main .redeemCoupon .discountDetail p.btn a:hover span { color:#fff; } 
+
+
+
+
+
+
+
+
+
+
+

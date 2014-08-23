@@ -1,0 +1,90 @@
+<!doctype html>
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<![endif]-->
+<head>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+     <title></title>
+
+     <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+     <script type="text/javascript" src="js/timer.js"></script>   
+     <script type="text/javascript" src="js/init.js"></script>   
+
+     <link rel="stylesheet" type="text/css" media="screen" href="css/default.css">
+</head>
+<body class="">
+
+<div class="layout">
+    <header>
+        <section class="settings">
+            <a href=""><img src="gfx/iconSettings.png" alt=""></a>
+        </section>
+        <img src="gfx/logo01.png" alt="">    
+    </header>
+    <section class="main" id="login">
+        <form id="login" method="post">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+            <button name="login">
+                <span>Login</span>
+            </button>
+        </form>
+    </section>
+    
+    <section class="main" id="code" style="display:none;">
+        <form id="code" method="post">
+            <input type="text" name="username" id="username" placeholder="Put the coupon redemption here">
+            <button name="find">
+                <span>Find</span>
+            </button>
+        </form>
+    </section>
+    
+    <section class="main" id="coupon" style="display:none;">
+    
+        <div class="redeemCoupon">
+            <div class="inner">
+                <div class="coupon">
+                    <p class="code" id="dataCode">XYZ123DS92</p>
+                    <p class="status active">active</p>
+                    <p class="created">created on <strong id="dataCreated">09.12.13</strong></p>
+                    <p class="expire">expiring on <strong id="dataExpire">30.12.13</strong></p>
+                </div>
+                <div class="discountDetail">
+                    <p class="img">
+                        <img src="img/img12.png" alt="">
+                        <span class="discount" id="dataDiscount">-59%</span>
+                    </p>
+                    <h2 id="dataHeadline">Smažený sýr s hranolkami a pivem v Cípu pro dva</h2>
+                    <p id="dataText">Zajděte si do klasické staročeské hospůdky v centru Prahy. K sýru či hermelínu dostanete také půllitr osvěžujících 10° Krušovic přímo z tanku.</p>
+                    <p class="price"><span id="dataPrice">130</span> Kč <strong>Běžná cena: <span id="oldPrice">318</span> Kč</strong></p>
+                    
+                    <!-- <a href="" class="btn btnBlue"><span>Redeem</span></a>
+                   <p class="btn btnArrow"><a href=""><span>Export</span></a></p>  -->
+                </div>
+            </div>
+        </div>    
+        <form id="redeem" method="post">
+            <button name="redeem">
+                <span>Redeem</span>
+            </button>
+        </form>
+    </section>
+    <section class="main" id="success">    
+        <form id="success" method="post">
+            <p>Your coupon has been redeemed<br>THANK YOU!!</p>
+            <img src="gfx/smiley.png" alt="">
+            <br>
+            <button name="homepage">
+                <span>Homepage</span>
+            </button>
+        </form>
+    </section>
+    <section class="main" id="loaderScreen"></section>
+    
+</div>
+
+</body>
+</html>
