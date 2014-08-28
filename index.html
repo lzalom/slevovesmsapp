@@ -73,7 +73,7 @@
         </form>
     </section>
     <section class="main" id="success">    
-        <form id="success" method="post">
+        <form id="successInner" method="post">
             <p>Your coupon has been redeemed<br>THANK YOU!!</p>
             <img src="gfx/smiley.png" alt="">
             <br>
@@ -83,6 +83,32 @@
         </form>
     </section>
     <section class="main" id="loaderScreen"></section>
+    <section class="main" id="settings">
+        <form id="settingsInner" method="post">
+            <section class="col">
+                <p>Synchronisation (every):</p>
+                <input type="radio" name="sync" value="5" id="sync5"><label for="sync5">5 minutes</label><br>
+                <input type="radio" name="sync" value="10" id="sync10"><label for="sync10">10 minutes</label><br>
+                <input type="radio" name="sync" value="15" id="sync15"><label for="sync15">15 minutes</label><br>
+                <input type="radio" name="sync" value="30" id="sync30"><label for="sync30">30 minutes</label><br>
+                <input type="radio" name="sync" value="60" id="sync60"><label for="sync60">1 hour</label><br>
+                <input type="radio" name="sync" value="1440" id="sync1440"><label for="sync1440">1 day</label><br>
+            
+            </section>
+            <section class="col">
+                <p>Environment:</p>                
+                <input type="radio" name="env" value="stage" id="stage"><label for="stage">Stage</label><br>
+                <input type="radio" name="env" value="production" id="production"><label for="production">Production</label>
+            
+            
+            </section>
+            <div class="clr"></div>
+            <br>
+            <button name="save">
+                <span>Save</span>
+            </button>
+        </form>
+    </section>
     
 </div>
 

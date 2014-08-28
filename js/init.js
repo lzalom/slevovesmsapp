@@ -22,6 +22,11 @@ $(document).ready(function(){
         homepage();
         return false;
     });
+    $('section.settings a').click(function(){
+        showLoader();
+        settings();
+        return false;
+    });
     
     
 
@@ -36,6 +41,10 @@ $(window).ready(function(){
 function showLoader(){
     $('.main').hide();
     $('.main#loaderScreen').show();
+}
+function settings(){
+    $('.main').hide();
+    $('.main#settings').show();
 }
 function login(){
     /* post request, callback = json */
