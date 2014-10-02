@@ -47,10 +47,10 @@ function settings(){
     $('.main#settings').show();
 }
 function login(){
-    //var email = 'miroslav.kralik@actumg2.cz';
-    //var password = 'k04L4PaS5';
-    var email = $('input#username').val();
-    var password = $('input#password').val();
+    var email = 'miroslav.kralik@actumg2.cz';
+    var password = 'k04L4PaS5';
+    //var email = $('input#username').val();
+    //var password = $('input#password').val();
 
     showLoader();
     /* prelogin */
@@ -75,10 +75,7 @@ function login(){
                     console.log(data.action);
                     console.log(data.errorCode);
                     if (data.errorCode==0){
-                        $('.main').hide();
-                        $('.main#login').find('p.message').remove();
-                        $('.main#code').show();
-                        
+
                         if (data.errorCode==101){
                             
                         }else{
@@ -90,7 +87,15 @@ function login(){
                                     console.log(data.action);
                                     console.log(data.errorCode);
                                     console.log(data.data);
-                                    console.log(data.data.orders[0]['discountCode']);
+                                    console.log('length: '+data.data.orders.length);
+                                    if (data.data.orders.length>0){
+                                        console.log(data.data.orders[0]['discountCode']);
+                                    }else{
+                                        console.log('no codes');
+                                    }
+                                    $('.main').hide();
+                                    $('.main#login').find('p.message').remove();
+                                    $('.main#code').show();
                                     sid = data.sid;
                                 },
                                 dataType: 'json'
@@ -172,6 +177,37 @@ Response:
     }    */
 }
 function find(){
+    var discountCode = $('input#discountCode').val();
+    $.ajax({
+        type: "POST",
+        url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+sid+'?req={action:%22getDiscountDetail%22,loginToken:%22'+loginTokenHash+'%22,data:{discountId:%22'+discountCode+'%22}}',
+        success: function(data){ 
+            console.log(discountCode);
+            console.log(data.action);
+            console.log(data.errorCode);
+            $('p.message').remove(); 
+            /*
+            if (data.data.orders[0]['orderState']=='REDEEMED'){
+                redeem();
+            }
+            if (data.data.orders[0]['orderState']=='ALREADY_REDEEMED'){
+                $('.main#code').show().find('button').before('<p class="message">Coupon already redeemed</p>');
+            }
+            if (data.data.orders[0]['orderState']=='EXPIRED'){
+                $('.main#code').show().find('button').before('<p class="message">Coupon expired</p>');
+            }   
+            */
+        },
+        dataType: 'json'
+    });
+    
+    /*
+http://dev.slevovesms.cz/mobile_api/?req={action:'getDiscountDetail',loginToken:'f7b3ed3d7770597ca4546299c6b747463771610009f74b6f2f81f23d54c24d73',data:{discountId:5831706594508800}}
+    */
+    
+}
+
+function redeem(){
     /* post request, callback = json */
     var discountCode = $('input#discountCode').val();
     $.ajax({
@@ -232,14 +268,7 @@ function find(){
     } 
     */
 }
-function redeem(){
-    /* post: coupon id */
-    /* callback */
-    $('.main').hide();
-    $('.main#code').find('p.message').remove();
-    $('.main#success').show();
 
-}
 function homepage(){
     $('.main').hide();
     $('.main#code').show();
