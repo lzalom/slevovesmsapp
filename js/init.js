@@ -47,10 +47,10 @@ function settings(){
     $('.main#settings').show();
 }
 function login(){
-    var email = 'miroslav.kralik@actumg2.cz';
-    var password = 'k04L4PaS5';
-    //var email = $('input#username').val();
-    //var password = $('input#password').val();
+    //var email = 'miroslav.kralik@actumg2.cz';
+    //var password = 'k04L4PaS5';
+    var email = $('input#username').val();
+    var password = $('input#password').val();
 
     showLoader();
     /* prelogin */
@@ -79,20 +79,25 @@ function login(){
                         $('.main#login').find('p.message').remove();
                         $('.main#code').show();
                         
-                        /* download codes */
-                        $.ajax({
-                            type: "POST",
-                            url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+data.sid+'?req={action:%22downloadCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{}}',
-                            success: function(data){ 
-                                console.log(data.action);
-                                console.log(data.errorCode);
-                                console.log(data.data.orders[0]['discountCode']);
-                                sid = data.sid;
-                            },
-                            dataType: 'json'
-                        });
-                        /* end */
-                        
+                        if (data.errorCode==101){
+                            
+                        }else{
+                            /* download codes */
+                            $.ajax({
+                                type: "POST",
+                                url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+data.sid+'?req={action:%22downloadCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{}}',
+                                success: function(data){ 
+                                    console.log(data.action);
+                                    console.log(data.errorCode);
+                                    console.log(data.data);
+                                    console.log(data.data.orders[0]['discountCode']);
+                                    sid = data.sid;
+                                },
+                                dataType: 'json'
+                            });
+                            /* end */                        
+                        }
+
                     }else{
                         $('.main').hide();
                         $('.main#login').show();
