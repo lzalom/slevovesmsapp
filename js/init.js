@@ -17,6 +17,13 @@ $(document).ready(function(){
         redeem();
         return false;
     });
+    $('button[name=backToFind]').click(function(){
+        showLoader();
+        $('.main').hide();
+        $('.main#login').find('p.message').remove();
+        $('.main#code').show();
+        return false;
+    });
     $('button[name=homepage]').click(function(){
         showLoader();
         homepage();
@@ -27,8 +34,6 @@ $(document).ready(function(){
         settings();
         return false;
     });
-    
-    
 
 
 });
@@ -89,7 +94,7 @@ function login(){
                                     console.log(data.data);
                                     console.log('length: '+data.data.orders.length);
                                     if (data.data.orders.length>0){
-                                        console.log(data.data.orders[0]['discountCode']);
+                                        ordersArray = data.data.orders;
                                     }else{
                                         console.log('no codes');
                                     }
@@ -177,29 +182,67 @@ Response:
     }    */
 }
 function find(){
-    var discountCode = $('input#discountCode').val();
-    $.ajax({
-        type: "POST",
-        url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+sid+'?req={action:%22getDiscountDetail%22,loginToken:%22'+loginTokenHash+'%22,data:{discountId:%22'+discountCode+'%22}}',
-        success: function(data){ 
-            console.log(discountCode);
-            console.log(data.action);
-            console.log(data.errorCode);
-            $('p.message').remove(); 
-            /*
-            if (data.data.orders[0]['orderState']=='REDEEMED'){
-                redeem();
-            }
-            if (data.data.orders[0]['orderState']=='ALREADY_REDEEMED'){
-                $('.main#code').show().find('button').before('<p class="message">Coupon already redeemed</p>');
-            }
-            if (data.data.orders[0]['orderState']=='EXPIRED'){
-                $('.main#code').show().find('button').before('<p class="message">Coupon expired</p>');
-            }   
-            */
-        },
-        dataType: 'json'
-    });
+    var control = 0;
+    for (index = 0; index < ordersArray.length; index++) {
+        console.log(ordersArray[index]['discountCode']);
+        if (ordersArray[index]['discountCode']==$('input#discountCode').val()){
+            discountCode = ordersArray[index]['discountId'];
+            discountCoupon = $('input#discountCode').val();
+            control = 1;
+        }
+    }
+    if (control==1){
+        $.ajax({
+            type: "POST",
+            url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+sid+'?req={action:%22getDiscountDetail%22,loginToken:%22'+loginTokenHash+'%22,data:{discountId:%22'+discountCode+'%22}}',
+            success: function(data){ 
+                console.log(discountCode);
+                console.log(data.action);
+                console.log(data.errorCode);
+                $('p.message').remove(); 
+                $('.main').hide();
+                $('.main#coupon').show();
+                $('#dataCode').html(discountCoupon);
+                $('#dataCreated').html(discountCode).hide();
+                $('#dataExpire').html(data.data.discountDetail.expired);
+                if (data.data.discountDetail.discountType=='PERCENT'){
+                    $('#dataDiscount').html(data.data.discountDetail.discount+' %');
+                }
+                if (data.data.discountDetail.discountType=='PLUSFREE'){
+                    $('#dataDiscount').html(data.data.discountDetail.amount+'+'+data.data.discountDetail.amountFree);
+                }
+                if (data.data.discountDetail.discountType=='FREE'){
+                    $('#dataDiscount').html('SPECIÁLNÍ');
+                }
+                $('#dataHeadline').html(data.data.discountDetail.name);
+                $('#dataText').html(data.data.discountDetail.annotation);
+                
+                if (data.data.discountDetail.discountType=='PERCENT'){
+                    $('#dataPrice').html(data.data.discountDetail.price+' Kč').show();
+                    $('#oldPrice').html(data.data.discountDetail.regularPrice+' Kč').show();
+                    $('.discountDetail .price').show(); 
+                }
+                if (data.data.discountDetail.discountType=='PLUSFREE'){
+                    $('.discountDetail .price').hide(); 
+                }
+                if (data.data.discountDetail.discountType=='FREE'){
+                    $('#dataPrice').hide();
+                    $('#oldPrice').html(data.data.discountDetail.regularPrice+' Kč');
+                    $('.discountDetail .price').show(); 
+                }
+                $('#.discountDetail .img img').attr('src','http://dev.slevovesms.cz/ai/0/2/0/'+data.data.discountDetail.imgId);
+                /* naplnění proměnné */
+                discountCodeToRedeem = discountCoupon;
+            },
+            dataType: 'json'
+        });    
+    }else{
+        showLoader();
+        $('.main').hide();
+        $('.main#code').show().find('button').remove('p.message').before('<p class="message">Invalid coupon or coupon already redeemed</p>');
+        $('.main#code').show();
+    }
+
     
     /*
 http://dev.slevovesms.cz/mobile_api/?req={action:'getDiscountDetail',loginToken:'f7b3ed3d7770597ca4546299c6b747463771610009f74b6f2f81f23d54c24d73',data:{discountId:5831706594508800}}
@@ -209,7 +252,7 @@ http://dev.slevovesms.cz/mobile_api/?req={action:'getDiscountDetail',loginToken:
 
 function redeem(){
     /* post request, callback = json */
-    var discountCode = $('input#discountCode').val();
+    var discountCode = discountCoupon;
     $.ajax({
         type: "POST",
         url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+sid+'?req={action:%22redeemCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{orders:[{discountCode:%22'+discountCode+'%22}]}}',
@@ -219,7 +262,7 @@ function redeem(){
             console.log(data.data.orders[0]['orderState']);
             $('p.message').remove(); 
             if (data.data.orders[0]['orderState']=='REDEEMED'){
-                redeem();
+                $('.main#code').show().find('button').before('<p class="message">Congratulations! Your coupon has been redeemed :-)</p>');
             }
             if (data.data.orders[0]['orderState']=='ALREADY_REDEEMED'){
                 $('.main#code').show().find('button').before('<p class="message">Coupon already redeemed</p>');
@@ -230,60 +273,9 @@ function redeem(){
         },
         dataType: 'json'
     });
-    
-   /*
-   {action:'redeemCodes',loginToken:'f42ef5cf1e5cd4cde713da3ddc817742243538b803e4ba91407386142ae70a03',data:{orders:[{discountCode:'A81UG4BJUJ'},{discountCode:'blablabla'}]}}
-   */
-    
-    /*
-    $('.main#code').find('p.message').remove();
-    
-    callback = '{"request":"find", "return":"1", "redeemDate":"11.20.2013 - 14.44", "coupon":{"code":"XYZ123AB89", "created":"09.12.13", "expiring":"30.12.13", "img":"image_url", "discount":"-59%", "headline":"Smažený sýr s hranolkami a pivem v Cípu pro dva", "text":"Zajděte si do klasické staročeské hospůdky....", "price":"130", "oldPrice":"318"}}';
-    data = $.parseJSON(callback);
-    if (data['return']==1){
-        $('.main').hide();
-        $('.main#login, .main#code').find('p.message').remove();
-                
-        $('#dataCode').html(data['coupon']['code']);
-        $('#dataCreated').text(data['coupon']['created']);
-        $('#dataExpire').text(data['coupon']['expiring']);
-        $('#dataDiscount').text(data['coupon']['discount']);
-        $('#dataHeadline').text(data['coupon']['headline']);
-        $('#dataText').text(data['coupon']['text']);
-        $('#dataPrice').text(data['coupon']['price']);
-        $('#oldPrice').text(data['coupon']['oldPrice']);
-        $('p.img img').attr('src',data['coupon']['img']);   
-        
-        $('.main#coupon').show();     
-        
-    }
-    if (data['return']==0){
-        $('.main#code').find('button').before('<p class="message">Coupon not found</p>');
-    } 
-    if (data['return']==2){
-        $('.main#code').find('button').before('<p class="message">Coupon expired.</p>');
-    } 
-    if (data['return']==3){
-        $('.main#code').find('button').before('<p class="message">Coupon already redeemed on '+data['redeemDate']+'.</p>');
-    } 
-    */
 }
 
 function homepage(){
     $('.main').hide();
     $('.main#code').show();
 }
-
-
-
-
-
-/*
-$.ajax({url: "employe.json"}).done(function(data){
-    console.log($.parseJSON(data));
-});
-*/
-
-/*
-{"code":9000,"data":[{"id":145,"status":0,"userId":214,"parentId":0,"placeId":0,"timeId":0,"productId":356,"product":{"id":356,"shortName":"ZOO Lešná","longName":"long_name","description":"Listky do ZOO lešná","valid":true,"parentId":0,"price":0.0,"imgPath":"path","show":true,"persons":0}
-*/
