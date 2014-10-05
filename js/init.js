@@ -52,10 +52,10 @@ function settings(){
     $('.main#settings').show();
 }
 function login(){
-    var email = 'miroslav.kralik@actumg2.cz';
-    var password = 'k04L4PaS5';
-    //var email = $('input#username').val();
-    //var password = $('input#password').val();
+    //var email = 'miroslav.kralik@actumg2.cz';
+    //var password = 'k04L4PaS5';
+    var email = $('input#username').val();
+    var password = $('input#password').val();
 
     showLoader();
     /* prelogin */
@@ -84,7 +84,7 @@ function login(){
                         if (data.errorCode==101){
                             
                         }else{
-                            /* download codes */
+                            /* download available codes */
                             $.ajax({
                                 type: "POST",
                                 url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+data.sid+'?req={action:%22downloadCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{}}',
@@ -94,14 +94,61 @@ function login(){
                                     console.log(data.data);
                                     console.log('length: '+data.data.orders.length);
                                     if (data.data.orders.length>0){
+                                        console.log(data.data.orders.length+' codes available');
                                         ordersArray = data.data.orders;
+                                        $('.main').hide();
+                                        $('.main#login').find('p.message').remove();
+                                        $('.main#code').find('input,button').show();
+                                        $('.main#code').show();
+                                        sid = data.sid;
                                     }else{
-                                        console.log('no codes');
+                                        console.log('no codes available');
+                                        $('.main').hide();
+                                        $('.main#login').find('p.message').remove();
+                                        $('.main#code').show();
+                                        $('.main#code').find('input,button').hide();
+                                        $('.main#code').find('button').before('<p class="message">No coupon available.</p>');
                                     }
                                     $('.main').hide();
                                     $('.main#login').find('p.message').remove();
                                     $('.main#code').show();
                                     sid = data.sid;
+                                    
+                                    /* update of list */
+                                    /* 5 minutes: default */
+                                    function downloadCodes(){
+                                        /* download available codes */
+                                        console.log('timer: codes downloading');
+                                        $.ajax({
+                                            type: "POST",
+                                            url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+data.sid+'?req={action:%22downloadCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{}}',
+                                            success: function(data){ 
+                                                console.log(data.action);
+                                                console.log(data.errorCode);
+                                                console.log(data.data);
+                                                console.log('length: '+data.data.orders.length);
+                                                if (data.data.orders.length>0){
+                                                    console.log(data.data.orders.length+' codes available');
+                                                    ordersArray = data.data.orders;
+                                                    $('.main').hide();
+                                                    $('.main#login').find('p.message').remove();
+                                                    $('.main#code').find('input,button').show();
+                                                    $('.main#code').show();
+                                                    sid = data.sid;
+                                                }else{
+                                                    console.log('no codes available');
+                                                    $('.main').hide();
+                                                    $('.main#login').find('p.message').remove();
+                                                    $('.main#code').show();
+                                                    $('.main#code').find('input,button').hide();
+                                                    $('.main#code').find('button').before('<p class="message">No coupon available.</p>');
+                                                }
+                                            },
+                                            dataType: 'json'
+                                        });
+                                        /* end */   
+                                    }
+                                    setInterval(function() {downloadCodes(); }, 300000);
                                 },
                                 dataType: 'json'
                             });
@@ -119,67 +166,6 @@ function login(){
         },
         dataType: 'json'
     });
-
-
-/*
-
-
-wget -O - "http://dev.slevovesms.cz/mobile_api/;jsessionid=IXwjA7S58NkYrtJFnw18yA?req={action:'login',loginToken:'f4e000dfb34d78cf22bc8849c8157f9db18e74facc387d5542f5df4a4ba02681',data:{email:'miroslav.kralik@actumg2.cz'}}"
-{
-  "action": "login",
-  "sid": "IXwjA7S58NkYrtJFnw18yA",
-  "errorCode": 0,
-  "data": {}
-}
-
-
-
-Struktura requestu:
-
-{
-  "action": string, // výčet: prelogin, login, logout, ping, downloadCodes, redeemCodes
-  "loginToken": logintoken, // kromě prelogin je required
-  "data": { // dodatečná data k akcím, element musí být vždy přítomen, jinak MISSING_DATA
-  }
-}
-
-Výpočet loginTokenu:
-loginToken je sha256(email + "|" + md5(password) + "|" + loginToken_z_response)
-
-př: pro výše uvedený email je na DEV1 md5 hesla dd95e869906c1546d8864ba8656ea4e2, takže loginToken se spočítá jako sha256("miroslav.kralik@actumg2.cz|dd95e869906c1546d8864ba8656ea4e2|YNUZ997FZG")
-možno vyzkoušet na http://www.xorbin.com/tools/sha256-hash-calculator
-
-login:
-Request:
-{action:'login',loginToken:'f42ef5cf1e5cd4cde713da3ddc817742243538b803e4ba91407386142ae70a03',data:{email:'miroslav.kralik@actumg2.cz'}}
-Response:
-{
-  "action": "login",
-  "errorCode": 0,
-  "data": {}
-}
-
-
-*/
-
-    
-    
-    
-    
-    /* post request, callback = json 
-    callback = '{"request":"login", "return":"1", "client":"123"}';*/
-        //{"request":"login", "return":"1", "data":[{}] }
-        /* return 1: sucess, 0: error */
-    //data = $.parseJSON(callback);
-    //console.log($.parseJSON(callback));
-    /*if (data['return']==1){
-        $('.main').hide();
-        $('.main#login').find('p.message').remove();
-        $('.main#code').show();
-    }
-    if (data['return']==0){
-        $('.main#login').find('button').before('<p class="message">Invalid username or password.</p>');
-    }    */
 }
 function find(){
     var control = 0;
@@ -239,15 +225,10 @@ function find(){
     }else{
         showLoader();
         $('.main').hide();
-        $('.main#code').show().find('button').remove('p.message').before('<p class="message">Invalid coupon or coupon already redeemed</p>');
+        $('p.message').remove();
+        $('.main#code').show().find('button').before('<p class="message">Invalid coupon or coupon already redeemed</p>');
         $('.main#code').show();
-    }
-
-    
-    /*
-http://dev.slevovesms.cz/mobile_api/?req={action:'getDiscountDetail',loginToken:'f7b3ed3d7770597ca4546299c6b747463771610009f74b6f2f81f23d54c24d73',data:{discountId:5831706594508800}}
-    */
-    
+    }    
 }
 
 function redeem(){
@@ -269,7 +250,29 @@ function redeem(){
             }
             if (data.data.orders[0]['orderState']=='EXPIRED'){
                 $('.main#code').show().find('button').before('<p class="message">Coupon expired</p>');
-            }   
+            }
+            /* download available codes */
+            $.ajax({
+                type: "POST",
+                url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+data.sid+'?req={action:%22downloadCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{}}',
+                success: function(data){ 
+                    console.log(data.action);
+                    console.log(data.errorCode);
+                    console.log(data.data);
+                    console.log('length: '+data.data.orders.length);
+                    if (data.data.orders.length>0){
+                        ordersArray = data.data.orders;
+                    }else{
+                        console.log('no codes');
+                    }
+                    $('.main').hide();
+                    $('.main#login').find('p.message').remove();
+                    $('.main#code').show();
+                    sid = data.sid;
+                },
+                dataType: 'json'
+            });
+            /* end */  
         },
         dataType: 'json'
     });
