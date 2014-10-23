@@ -34,6 +34,16 @@ $(document).ready(function(){
         settings();
         return false;
     });
+    
+    /* input limits, init */
+    $('input#discountCode').val('');
+    $('input#discountCode').keyup(function(){
+        if ( $(this).val()=='' ){
+            $('button[name=find]').attr('disabled','disabled').addClass('disabled');;
+        }else{
+            $('button[name=find]').removeAttr('disabled').removeClass('disabled');   
+        }
+    });
 
 
 });
@@ -61,7 +71,7 @@ function login(){
     /* prelogin */
     $.ajax({
         type: "POST",
-        url: 'http://dev.slevovesms.cz/mobile_api/?req={action:%22prelogin%22,data:{email:%22'+email+'%22}}',
+        url: 'http://dev.gurmanie.com/mobile_api/?req={action:%22prelogin%22,data:{email:%22'+email+'%22}}',
         success: function(data){ 
             console.log(data.action);
             console.log(data.errorCode);
@@ -75,7 +85,7 @@ function login(){
             /* login */
             $.ajax({
                 type: "POST",
-                url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+data.sid+'?req={action:%22login%22,loginToken:%22'+loginTokenHash+'%22,data:{email:%22'+email+'%22}}',
+                url: 'http://dev.gurmanie.com/mobile_api/;jsessionid='+data.sid+'?req={action:%22login%22,loginToken:%22'+loginTokenHash+'%22,data:{email:%22'+email+'%22}}',
                 success: function(data){ 
                     console.log(data.action);
                     console.log(data.errorCode);
@@ -87,7 +97,7 @@ function login(){
                             /* download available codes */
                             $.ajax({
                                 type: "POST",
-                                url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+data.sid+'?req={action:%22downloadCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{}}',
+                                url: 'http://dev.gurmanie.com/mobile_api/;jsessionid='+data.sid+'?req={action:%22downloadCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{}}',
                                 success: function(data){ 
                                     console.log(data.action);
                                     console.log(data.errorCode);
@@ -121,7 +131,7 @@ function login(){
                                         console.log('timer: codes downloading');
                                         $.ajax({
                                             type: "POST",
-                                            url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+data.sid+'?req={action:%22downloadCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{}}',
+                                            url: 'http://dev.gurmanie.com/mobile_api/;jsessionid='+data.sid+'?req={action:%22downloadCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{}}',
                                             success: function(data){ 
                                                 console.log(data.action);
                                                 console.log(data.errorCode);
@@ -180,7 +190,7 @@ function find(){
     if (control==1){
         $.ajax({
             type: "POST",
-            url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+sid+'?req={action:%22getDiscountDetail%22,loginToken:%22'+loginTokenHash+'%22,data:{discountId:%22'+discountCode+'%22}}',
+            url: 'http://dev.gurmanie.com/mobile_api/;jsessionid='+sid+'?req={action:%22getDiscountDetail%22,loginToken:%22'+loginTokenHash+'%22,data:{discountId:%22'+discountCode+'%22}}',
             success: function(data){ 
                 console.log(discountCode);
                 console.log(data.action);
@@ -216,7 +226,7 @@ function find(){
                     $('#oldPrice').html(data.data.discountDetail.regularPrice+' Kč');
                     $('.discountDetail .price').show(); 
                 }
-                $('#.discountDetail .img img').attr('src','http://dev.slevovesms.cz/ai/0/2/0/'+data.data.discountDetail.imgId);
+                $('#.discountDetail .img img').attr('src','http://dev.gurmanie.com/ai/0/2/0/'+data.data.discountDetail.imgId);
                 /* naplnění proměnné */
                 discountCodeToRedeem = discountCoupon;
             },
@@ -236,7 +246,7 @@ function redeem(){
     var discountCode = discountCoupon;
     $.ajax({
         type: "POST",
-        url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+sid+'?req={action:%22redeemCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{orders:[{discountCode:%22'+discountCode+'%22}]}}',
+        url: 'http://dev.gurmanie.com/mobile_api/;jsessionid='+sid+'?req={action:%22redeemCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{orders:[{discountCode:%22'+discountCode+'%22}]}}',
         success: function(data){ 
             console.log(data.action);
             console.log(data.errorCode);
@@ -254,7 +264,7 @@ function redeem(){
             /* download available codes */
             $.ajax({
                 type: "POST",
-                url: 'http://dev.slevovesms.cz/mobile_api/;jsessionid='+data.sid+'?req={action:%22downloadCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{}}',
+                url: 'http://dev.gurmanie.com/mobile_api/;jsessionid='+data.sid+'?req={action:%22downloadCodes%22,loginToken:%22'+loginTokenHash+'%22,data:{}}',
                 success: function(data){ 
                     console.log(data.action);
                     console.log(data.errorCode);

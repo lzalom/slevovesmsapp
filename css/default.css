@@ -42,6 +42,7 @@ a.btn { font-family: 'Open Sans', 'Arial', 'Helvetica', sans-serif; font-weight:
 a.btn.btnBlue { background:#0d6bb0 url(../gfx/buttonBlue.png) 0px 0px repeat-x; border:1px #0c5a95 solid; color:#fff; text-shadow: 1px 1px #0e5f9b;  }
 a.btn.btnBlue:hover { background:#0294f6; }
 
+.disabled { opacity:0.4; }
 
 header { padding:5%; position:relative; }
 header .settings { position:absolute; right:20px; top:20px; }
