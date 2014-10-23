@@ -1,3 +1,5 @@
+var loginError;
+
 $(document).ready(function(){
 
     $('form').submit(function(){ return false; });
@@ -34,6 +36,7 @@ $(document).ready(function(){
         settings();
         return false;
     });
+    backToCodeInput();
     
     /* input limits, init */
     $('input#discountCode').val('');
@@ -50,9 +53,19 @@ $(document).ready(function(){
 
 $(window).ready(function(){
 
-
     
 });
+function backToCodeInput(){
+    $('header img').click(function(e){
+        if (loginError!=1){
+            showLoader();
+            $('.main').hide();
+            $('.main#login').find('p.message').remove();
+            $('.main#code').show();
+        }
+        e.preventDefault();
+    });
+}
 function showLoader(){
     $('.main').hide();
     $('.main#loaderScreen').show();
@@ -90,7 +103,7 @@ function login(){
                     console.log(data.action);
                     console.log(data.errorCode);
                     if (data.errorCode==0){
-
+                        loginError = 0;
                         if (data.errorCode==101){
                             
                         }else{
@@ -166,6 +179,7 @@ function login(){
                         }
 
                     }else{
+                        loginError = 1;
                         $('.main').hide();
                         $('.main#login').show();
                         $('.main#login').find('button').before('<p class="message">Invalid username or password.</p>');
