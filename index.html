@@ -17,9 +17,9 @@
 
 <div class="layout">
     <header>
-        <section class="settings" style="display:none;">
+        <!--<section class="settings" style="display:none;">
             <a href=""><img src="gfx/iconSettings.png" alt=""></a>
-        </section>
+        </section>-->
         <img src="gfx/logo01.png" alt="">    
     </header>
     <section class="main" id="login">
@@ -91,7 +91,8 @@
         <form id="settingsInner" method="post">
             <section class="col">
                 <p>Synchronisation (every):</p>
-                <input type="radio" name="sync" value="5" id="sync5"><label for="sync5">5 minutes</label><br>
+                <input type="radio" name="sync" value="1" id="sync1" checked><label for="sync1">1 minute</label><br>
+                <input type="radio" name="sync" value="5" id="sync5" checked><label for="sync5">5 minutes</label><br>
                 <input type="radio" name="sync" value="10" id="sync10"><label for="sync10">10 minutes</label><br>
                 <input type="radio" name="sync" value="15" id="sync15"><label for="sync15">15 minutes</label><br>
                 <input type="radio" name="sync" value="30" id="sync30"><label for="sync30">30 minutes</label><br>
@@ -102,7 +103,7 @@
             <section class="col">
                 <p>Environment:</p>                
                 <input type="radio" name="env" value="stage" id="stage"><label for="stage">Stage</label><br>
-                <input type="radio" name="env" value="production" id="production"><label for="production">Production</label>
+                <input type="radio" name="env" value="dev" id="production" checked><label for="production">Production</label>
             
             
             </section>

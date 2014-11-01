@@ -1,6 +1,10 @@
-var loginError;
+var loginError, syncInterval, environment, downloadInterval;
 
 $(document).ready(function(){
+
+    loginError = 1;
+    syncInterval = 1*60000;
+    environment = 'dev';
 
     $('form').submit(function(){ return false; });
     
@@ -35,6 +39,14 @@ $(document).ready(function(){
         showLoader();
         settings();
         return false;
+    });
+    $('button[name=save]').click(function(e){
+        setSetting();
+        showLoader();
+        $('.main').hide();
+        $('.main#login').find('p.message').remove();
+        $('.main#code').show();
+        e.preventDefault();
     });
     backToCodeInput();
     
@@ -74,6 +86,15 @@ function settings(){
     $('.main').hide();
     $('.main#settings').show();
 }
+function setSetting(){
+    syncInterval = parseInt($('input[name=sync]:checked').val())*60000;
+    environment = $('input[name=env]:checked').val();
+
+}
+function setTownloadInterval(){
+    clearInterval(downloadInterval);
+    downloadInterval = setInterval(function() {downloadCodes(); }, syncInterval );
+}
 function login(){
     //var email = 'miroslav.kralik@actumg2.cz';
     //var password = 'k04L4PaS5';
@@ -104,6 +125,7 @@ function login(){
                     console.log(data.errorCode);
                     if (data.errorCode==0){
                         loginError = 0;
+                        $('header .settings').show();
                         if (data.errorCode==101){
                             
                         }else{
@@ -171,7 +193,8 @@ function login(){
                                         });
                                         /* end */   
                                     }
-                                    setInterval(function() {downloadCodes(); }, 300000);
+                                    setInterval(function() {downloadCodes(); }, 300000 );
+                                    //setTownloadInterval();
                                 },
                                 dataType: 'json'
                             });
