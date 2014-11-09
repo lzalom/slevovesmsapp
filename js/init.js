@@ -232,12 +232,45 @@ function find(){
                 console.log(discountCode);
                 console.log(data.action);
                 console.log(data.errorCode);
+                
+                expireDate = data.data.discountDetail.expired.split('T');
+                expireDateDate = expireDate[0].split('-');
+                expireDateTime = expireDate[1].split(':');
+                
+                var date = new Date();
+                var d = date.getDay();
+                var m = date.getMonth();
+                var y = date.getFullYear();
+                var h = date.getHours();
+                var min = date.getMinutes();
+                var s = date.getSeconds();
+
+                
+                
+        /*
+       var dateOne = new Date(2012, 04, 20, 14, 55, 59);
+       var dateTwo = new Date(2012, 04, 20, 12, 10, 20);
+        k04L4PaS5
+        */
+       
+       var dateOne = new Date(y, m, d, h, min, s);
+       var dateTwo = new Date(expireDateDate[0], expireDateDate[1], expireDateDate[2], 12, 10, 20);
+        //Note: 04 is month i.e. May
+       if (dateOne > dateTwo) {
+            $('.status').removeClass('active').removeClass('inactive').addClass('active').html('active');
+        }else {
+            //expired
+            $('.status').removeClass('active').removeClass('inactive').addClass('inactive').html('expired');
+        }
+
+                
+                
                 $('p.message').remove(); 
                 $('.main').hide();
                 $('.main#coupon').show();
                 $('#dataCode').html(discountCoupon);
                 $('#dataCreated').html(discountCode).hide();
-                $('#dataExpire').html(data.data.discountDetail.expired);
+                $('#dataExpire').html(expireDateDate[2]+'. '+expireDateDate[1]+'. '+expireDateDate[0]);
                 if (data.data.discountDetail.discountType=='PERCENT'){
                     $('#dataDiscount').html(data.data.discountDetail.discount+' %');
                 }
