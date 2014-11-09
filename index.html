@@ -24,21 +24,21 @@
     </header>
     <section class="main" id="login">
         <form id="login" method="post">
-            <label for="username">Username</label>
+            <label for="username">Uživatelské jméno</label>
             <input type="text" name="username" id="username">
-            <label for="password">Password</label>
+            <label for="password">Heslo</label>
             <input type="password" name="password" id="password">
             <button name="login">
-                <span>Login</span>
+                <span>Přihlásit se</span>
             </button>
         </form>
     </section>
     
     <section class="main" id="code" style="display:none;">
         <form id="codeInner" method="post">
-            <input type="text" name="discountCode" id="discountCode" placeholder="Put the coupon redemption here" maxlength="10">
+            <input type="text" name="discountCode" id="discountCode" placeholder="Zde zadejte speciální kód nabídky" maxlength="10">
             <button name="find" disabled="disabled" class="disabled">
-                <span>Find</span>
+                <span>Ověřit</span>
             </button>
         </form>
     </section>
@@ -49,9 +49,9 @@
             <div class="inner">
                 <div class="coupon">
                     <p class="code" id="dataCode">XYZ123DS92</p>
-                    <p class="status active">active</p>
-                    <p class="created">created on <strong id="dataCreated">09.12.13</strong></p>
-                    <p class="expire">expiring on <strong id="dataExpire">30.12.13</strong></p>
+                    <p class="status active">aktívní</p>
+                    <p class="created">Objednán <strong id="dataCreated">09.12.13</strong></p>
+                    <p class="expire">Vyprší <strong id="dataExpire">30.12.13</strong></p>
                 </div>
                 <div class="discountDetail">
                     <p class="img">
@@ -69,20 +69,20 @@
         </div>    
         <form id="redeem" method="post">
             <button name="redeem">
-                <span>Redeem</span>
+                <span>Uplatnit</span>
             </button>
             <button name="backToFind">
-                <span>Back</span>
+                <span>Zpět</span>
             </button>
         </form>
     </section>
     <section class="main" id="success">    
         <form id="successInner" method="post">
-            <p>Your coupon has been redeemed<br>THANK YOU!!</p>
+            <p>Váš speciální kód byl právě uplatněn<br>Děkujeme!</p>
             <img src="gfx/smiley.png" alt="">
             <br>
             <button name="homepage">
-                <span>Homepage</span>
+                <span>Hlavní stránka</span>
             </button>
         </form>
     </section>
@@ -90,7 +90,7 @@
     <section class="main" id="settings">
         <form id="settingsInner" method="post">
             <section class="col">
-                <p>Synchronisation (every):</p>
+                <p>Synchronizace (každou):</p>
                 <input type="radio" name="sync" value="1" id="sync1" checked><label for="sync1">1 minute</label><br>
                 <input type="radio" name="sync" value="5" id="sync5" checked><label for="sync5">5 minutes</label><br>
                 <input type="radio" name="sync" value="10" id="sync10"><label for="sync10">10 minutes</label><br>
@@ -101,16 +101,16 @@
             
             </section>
             <section class="col">
-                <p>Environment:</p>                
+                <p>Prostředí:</p>                
                 <input type="radio" name="env" value="stage" id="stage"><label for="stage">Stage</label><br>
-                <input type="radio" name="env" value="dev" id="production" checked><label for="production">Production</label>
+                <input type="radio" name="env" value="dev" id="production" checked><label for="production">Produkce</label>
             
             
             </section>
             <div class="clr"></div>
             <br>
             <button name="save">
-                <span>Save</span>
+                <span>Uložit</span>
             </button>
         </form>
     </section>

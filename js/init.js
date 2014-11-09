@@ -152,7 +152,7 @@ function login(){
                                         $('.main#login').find('p.message').remove();
                                         $('.main#code').show();
                                         $('.main#code').find('input,button').hide();
-                                        $('.main#code').find('button').before('<p class="message">No coupon available.</p>');
+                                        $('.main#code').find('button').before('<p class="message">Žádný kód nebyl nalezen.</p>');
                                     }
                                     $('.main').hide();
                                     $('.main#login').find('p.message').remove();
@@ -186,7 +186,7 @@ function login(){
                                                     $('.main#login').find('p.message').remove();
                                                     $('.main#code').show();
                                                     $('.main#code').find('input,button').hide();
-                                                    $('.main#code').find('button').before('<p class="message">No coupon available.</p>');
+                                                    $('.main#code').find('button').before('<p class="message">Žádný kód nebyl nalezen.</p>');
                                                 }
                                             },
                                             dataType: 'json'
@@ -205,7 +205,7 @@ function login(){
                         loginError = 1;
                         $('.main').hide();
                         $('.main#login').show();
-                        $('.main#login').find('button').before('<p class="message">Invalid username or password.</p>');
+                        $('.main#login').find('button').before('<p class="message">Špatný e-mail nebo heslo.</p>');
                     }
                 },
                 dataType: 'json'
@@ -262,14 +262,13 @@ function find(){
             //expired
             $('.status').removeClass('active').removeClass('inactive').addClass('inactive').html('expired');
         }
-
-                
                 
                 $('p.message').remove(); 
                 $('.main').hide();
-                $('.main#coupon').show();
+                $('.main#coupon').show();                
                 $('#dataCode').html(discountCoupon);
-                $('#dataCreated').html(discountCode).hide();
+             //   $('#dataCreated').html(discountCode).hide();
+                $('#dataCreated').html(data.data.discountDetail.sendDate);
                 $('#dataExpire').html(expireDateDate[2]+'. '+expireDateDate[1]+'. '+expireDateDate[0]);
                 if (data.data.discountDetail.discountType=='PERCENT'){
                     $('#dataDiscount').html(data.data.discountDetail.discount+' %');
@@ -306,7 +305,7 @@ function find(){
         showLoader();
         $('.main').hide();
         $('p.message').remove();
-        $('.main#code').show().find('button').before('<p class="message">Invalid coupon or coupon already redeemed</p>');
+        $('.main#code').show().find('button').before('<p class="message">Špatný kód nebo již byl uplatněn.</p>');
         $('.main#code').show();
     }    
 }
@@ -323,13 +322,14 @@ function redeem(){
             console.log(data.data.orders[0]['orderState']);
             $('p.message').remove(); 
             if (data.data.orders[0]['orderState']=='REDEEMED'){
-                $('.main#code').show().find('button').before('<p class="message">Congratulations! Your coupon has been redeemed :-)</p>');
+                $('.main#code').show().find('button').before('<p class="message">Váš kód by právě uplatněn. Děkujeme! :-)</p>');
+                $("#codeInner")[0].reset();
             }
             if (data.data.orders[0]['orderState']=='ALREADY_REDEEMED'){
-                $('.main#code').show().find('button').before('<p class="message">Coupon already redeemed</p>');
+                $('.main#code').show().find('button').before('<p class="message">Litujeme, zadaný kód již byl uplatněn.</p>');
             }
             if (data.data.orders[0]['orderState']=='EXPIRED'){
-                $('.main#code').show().find('button').before('<p class="message">Coupon expired</p>');
+                $('.main#code').show().find('button').before('<p class="message">Litujeme, zadaný kód již není platný.</p>');
             }
             /* download available codes */
             $.ajax({
